@@ -214,8 +214,6 @@ A launchpad or DEX front end on Gully Core is a **tenant** of the kit. A tenant 
   terms.
 - A second pad from the same creator and salt on one chain reverts `PadAlreadyExists`.
 - `name` is 1 to 40 bytes. `metadataURI` (brand pointer: `ipfs://`, `https://` or a data URI) is up to 4,096 bytes.
-- Creating a pad costs a flat site fee in the native asset, read from `padFeeWei()`. It is a one-time cost per
-  pad, not a trading fee. Excess `msg.value` is refunded.
 - The pad owner changes tenant terms with `configure`, quotes with `setQuote`, and the brand with `setMetadata`.
   Ownership moves in two steps. `renounceOwnership` reverts.
 - A pad holds nothing. Fees are credited to your `integrator` address, which may not be the pad.
