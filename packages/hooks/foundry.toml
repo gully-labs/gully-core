@@ -1,0 +1,63 @@
+[profile.default]
+src = "src"
+out = "foundry-out"
+solc_version = "0.8.26"
+optimizer_runs = 25_666
+via_ir = true
+evm_version = "cancun"
+bytecode_hash = "none"
+allow_paths = ["../core"]
+allow_internal_expect_revert = false
+fs_permissions = [
+    # test/docs/DocsClaims.t.sol reads the committed fixture. The docs page it compares with is outside this
+    # repo: see GULLYCORE_DOCS_CONTENT in that test.
+    { access = "read", path = "./test" },
+    { access = "read", path = "./src" },
+]
+# GullyCoreDexHook (the accepted dynamic-fee hook + OracleModule) is 26,582 bytes at 25,666 runs,
+# over EIP-170. It is pinned to 2,000 runs (22,631 bytes). Every compilation unit that includes it
+# (its tests, its deploy script) gets the "dexrt" profile; nothing else changes (the accepted
+# GullyCoreDynamicFeeHook's own artifact is byte-identical, checked after this was added).
+additional_compiler_profiles = [{ name = "dexrt", optimizer_runs = 2_000 }]
+compilation_restrictions = [{ paths = "src/dex/GullyCoreDexHook.sol", optimizer_runs = 2_000 }]
+remappings = [
+    "infinity-core/=../core/",
+    "gullycore-hooks/=./",
+    "forge-std/=../core/lib/forge-std/src/",
+    "ds-test/=../core/lib/forge-std/lib/ds-test/src/",
+    "@openzeppelin/=../core/lib/openzeppelin-contracts/",
+    "solmate/=../core/lib/solmate/",
+    "hp-transient/=../core/src/libraries/transient/eip1153/",
+]
+
+[profile.legacy]
+src = "src"
+out = "foundry-out-legacy"
+solc_version = "0.8.26"
+optimizer_runs = 25_666
+via_ir = true
+evm_version = "shanghai"
+bytecode_hash = "none"
+allow_paths = ["../core"]
+allow_internal_expect_revert = false
+fs_permissions = [
+    # test/docs/DocsClaims.t.sol reads the committed fixture. The docs page it compares with is outside this
+    # repo: see GULLYCORE_DOCS_CONTENT in that test.
+    { access = "read", path = "./test" },
+    { access = "read", path = "./src" },
+]
+# GullyCoreDexHook (the accepted dynamic-fee hook + OracleModule) is 26,582 bytes at 25,666 runs,
+# over EIP-170. It is pinned to 2,000 runs (22,631 bytes). Every compilation unit that includes it
+# (its tests, its deploy script) gets the "dexrt" profile; nothing else changes (the accepted
+# GullyCoreDynamicFeeHook's own artifact is byte-identical, checked after this was added).
+additional_compiler_profiles = [{ name = "dexrt", optimizer_runs = 2_000 }]
+compilation_restrictions = [{ paths = "src/dex/GullyCoreDexHook.sol", optimizer_runs = 2_000 }]
+remappings = [
+    "infinity-core/=../core/",
+    "gullycore-hooks/=./",
+    "forge-std/=../core/lib/forge-std/src/",
+    "ds-test/=../core/lib/forge-std/lib/ds-test/src/",
+    "@openzeppelin/=../core/lib/openzeppelin-contracts/",
+    "solmate/=../core/lib/solmate/",
+    "hp-transient/=../core/src/libraries/transient/storage/",
+]

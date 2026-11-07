@@ -1,0 +1,17 @@
+# Libraries pinned at the commits Gully Core builds with.
+# Never add packages/periphery/lib/infinity-core or packages/router/lib/infinity-periphery.
+[submodule "packages/core/lib/forge-std"]
+	path = packages/core/lib/forge-std
+	url = https://github.com/foundry-rs/forge-std
+[submodule "packages/core/lib/openzeppelin-contracts"]
+	path = packages/core/lib/openzeppelin-contracts
+	url = https://github.com/OpenZeppelin/openzeppelin-contracts
+[submodule "packages/core/lib/solmate"]
+	path = packages/core/lib/solmate
+	url = https://github.com/transmissions11/solmate
+[submodule "packages/periphery/lib/permit2"]
+	path = packages/periphery/lib/permit2
+	url = https://github.com/pancakeswap/permit2
+[submodule "packages/router/lib/forge-std"]
+	path = packages/router/lib/forge-std
+	url = https://github.com/foundry-rs/forge-std

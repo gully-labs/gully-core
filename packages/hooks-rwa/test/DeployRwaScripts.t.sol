@@ -1,0 +1,354 @@
+// SPDX-License-Identifier: GPL-2.0-or-later
+// Copyright (C) 2026 DeepCore Protocol
+// Copyright (C) 2026 Gully Labs (modifications: Gully Core)
+pragma solidity 0.8.26;
+
+import {Test} from "forge-std/Test.sol";
+import {Vault} from "infinity-core/src/Vault.sol";
+import {CLPoolManager} from "infinity-core/src/pool-cl/CLPoolManager.sol";
+import {Deployers} from "infinity-core/test/pool-cl/helpers/Deployers.sol";
+import {CreateXTest} from "gullycore-hooks/test/helpers/CreateXLike.sol";
+import {GullyCoreGovernance} from "gullycore-hooks/script/GullyCoreGovernance.sol";
+
+import {DeployMarketHoursHookScript} from "../script/DeployMarketHoursHook.s.sol";
+import {DeployStockPairHookScript} from "../script/DeployStockPairHook.s.sol";
+import {DeployChainlinkPriceBandAdapterScript} from "../script/DeployChainlinkPriceBandAdapter.s.sol";
+import {DeployChainlinkCrossPriceBandAdapterScript} from "../script/DeployChainlinkCrossPriceBandAdapter.s.sol";
+import {DeployAllowlistComplianceOracleScript} from "../script/DeployAllowlistComplianceOracle.s.sol";
+import {RwaReleaseBase, RwaGullyCoreMetadata, RwaGullyCoreRecord} from "../script/RwaReleaseBase.sol";
+import {MarketHoursHook} from "../src/MarketHoursHook.sol";
+import {StockPairHook} from "../src/StockPairHook.sol";
+import {ChainlinkPriceBandAdapter} from "../src/oracles/ChainlinkPriceBandAdapter.sol";
+import {ChainlinkCrossPriceBandAdapter} from "../src/oracles/ChainlinkCrossPriceBandAdapter.sol";
+import {AllowlistComplianceOracle} from "../src/oracles/AllowlistComplianceOracle.sol";
+
+/// @dev TEST ONLY. Stands in for `GullyCoreRegistry`'s listing surface: register reads the bitmap off the
+/// hook like the real one, and steward rules are the real ones' (submitter, then transferable).
+contract ListingRegistryStub {
+    mapping(address => RwaGullyCoreRecord) internal _r;
+
+    function register(address hook, RwaGullyCoreMetadata calldata m) external {
+        require(_r[hook].submitter == address(0), "GullyCoreAlreadyRegistered");
+        (bool ok, bytes memory ret) = hook.staticcall(abi.encodeWithSignature("getHooksRegistrationBitmap()"));
+        require(ok, "PermissionsUnreadable");
+        RwaGullyCoreRecord storage r = _r[hook];
+        r.submitter = msg.sender;
+        r.steward = msg.sender;
+        r.permissions = abi.decode(ret, (uint16));
+        r.metadata = m;
+    }
+
+    function transferSteward(address hook, address s) external {
+        require(msg.sender == _r[hook].steward, "NotSteward");
+        _r[hook].steward = s;
+    }
+
+    function isRegistered(address hook) external view returns (bool) {
+        return _r[hook].submitter != address(0);
+    }
+
+    function getGullyCore(address hook) external view returns (RwaGullyCoreRecord memory) {
+        return _r[hook];
+    }
+}
+
+/// @dev A contract owner (the Safe must be a contract).
+contract SafeStandIn {}
+
+/// @dev Chainlink uptime feed shape, for the feed checks. Code-only (immutable + pure).
+contract UptimeFeedStub {
+    int256 internal immutable _answer;
+
+    constructor(int256 a) {
+        _answer = a;
+    }
+
+    function description() external pure returns (string memory) {
+        return "L2 Sequencer Uptime Status Feed";
+    }
+
+    function aggregator() external view returns (address) {
+        return address(this);
+    }
+
+    function decimals() external pure returns (uint8) {
+        return 0;
+    }
+
+    function typeAndVersion() external pure returns (string memory) {
+        return "OptimismSequencerUptimeFeed 1.0.0";
+    }
+
+    function latestRoundData() external view returns (uint80, int256, uint256, uint256, uint80) {
+        return (1, _answer, 1, block.timestamp, 1);
+    }
+}
+
+/// @notice The four RWA release scripts' `runWith` entry points, driven in-EVM. The live proof is the
+/// fork rehearsal (`ops/deploy/rwa-release-2026-09-28.md`); this pins the refusals under both profiles.
+contract DeployRwaScriptsTest is Test, Deployers {
+    uint256 internal constant PK = 0xA11CE;
+    address internal deployer;
+    address internal safe;
+    address internal ops = makeAddr("ops");
+    Vault internal vault;
+    CLPoolManager internal manager;
+    ListingRegistryStub internal registry;
+
+    DeployMarketHoursHookScript internal mhScript;
+    DeployStockPairHookScript internal spScript;
+    DeployChainlinkPriceBandAdapterScript internal adScript;
+    DeployChainlinkCrossPriceBandAdapterScript internal crossScript;
+    DeployAllowlistComplianceOracleScript internal orScript;
+
+    function setUp() public {
+        deployer = vm.addr(PK);
+        CreateXTest.etch();
+        (vault, manager) = createFreshManager();
+        registry = new ListingRegistryStub();
+        safe = address(new SafeStandIn());
+        mhScript = new DeployMarketHoursHookScript();
+        spScript = new DeployStockPairHookScript();
+        adScript = new DeployChainlinkPriceBandAdapterScript();
+        crossScript = new DeployChainlinkCrossPriceBandAdapterScript();
+        orScript = new DeployAllowlistComplianceOracleScript();
+    }
+
+    function _signer() internal view returns (RwaReleaseBase.Signer memory) {
+        return RwaReleaseBase.Signer({pk: PK, deployer: deployer});
+    }
+
+    function _mh(address owner_, address steward) internal view returns (DeployMarketHoursHookScript.Params memory) {
+        return DeployMarketHoursHookScript.Params({
+            signer: _signer(),
+            poolManager: address(manager),
+            owner: owner_,
+            registry: address(registry),
+            steward: steward,
+            target: CreateXTest.target(deployer, bytes11("mh"))
+        });
+    }
+
+    function test_marketHoursHook_deploysOwnedBySafe_listed_stewardOps() public {
+        MarketHoursHook hook = mhScript.runWith(_mh(safe, ops));
+        assertEq(hook.owner(), safe);
+        assertEq(hook.pendingOwner(), address(0));
+        assertEq(hook.getHooksRegistrationBitmap(), 0x00C5);
+        assertTrue(registry.isRegistered(address(hook)));
+        assertEq(registry.getGullyCore(address(hook)).steward, ops);
+        vm.expectRevert(MarketHoursHook.RenounceDisabled.selector);
+        vm.prank(safe);
+        hook.renounceOwnership();
+    }
+
+    function test_marketHoursHook_refusesAnEoaOwner() public {
+        vm.expectRevert(bytes("RWA_OWNER has no code - the Safe, not an EOA"));
+        mhScript.runWith(_mh(makeAddr("eoa"), ops));
+    }
+
+    function test_marketHoursHook_refusesTheDeployerAsOwner() public {
+        vm.etch(deployer, hex"00");
+        vm.expectRevert(bytes("RWA_OWNER is the deployer"));
+        mhScript.runWith(_mh(deployer, ops));
+    }
+
+    function test_marketHoursHook_refusesNoSteward() public {
+        vm.expectRevert(bytes("RWA_STEWARD unset - the Ownership table assigns listing stewardship to Ops"));
+        mhScript.runWith(_mh(safe, address(0)));
+    }
+
+    function test_marketHoursHook_refusesAnUnregisteredManager() public {
+        DeployMarketHoursHookScript.Params memory p = _mh(safe, ops);
+        p.poolManager = address(new CLPoolManager(vault)); // never registerApp'd
+        vm.expectRevert(bytes("the pool manager is not registered in its vault"));
+        mhScript.runWith(p);
+    }
+
+    /// The governance Safe of record is set (`GullyCoreGovernance.SAFE`, 2026-10-07): on every production
+    /// chain, HyperEVM included, a candidate owner that is not that Safe is refused — the test stub here.
+    function test_marketHoursHook_onProduction_refusesAnOwnerThatIsNotTheSafeOfRecord() public {
+        assertTrue(GullyCoreGovernance.SAFE != address(0), "the governance Safe of record is set (owner, 2026-10-07)");
+        vm.chainId(485590);
+        vm.expectRevert(bytes("RWA_OWNER is not the governance Safe of record"));
+        mhScript.runWith(_mh(safe, ops));
+    }
+
+    function test_stockPairHook_deploysOwnedBySafe_listed_noTrustedRouter() public {
+        StockPairHook hook = spScript.runWith(
+            DeployStockPairHookScript.Params({
+                signer: _signer(),
+                poolManager: address(manager),
+                owner: safe,
+                registry: address(registry),
+                steward: ops,
+                target: CreateXTest.target(deployer, bytes11("sp"))
+            })
+        );
+        assertEq(hook.owner(), safe);
+        assertEq(hook.getHooksRegistrationBitmap(), 0x00D5);
+        assertFalse(hook.paused());
+        assertFalse(hook.isTrustedRouter(deployer));
+        assertEq(registry.getGullyCore(address(hook)).steward, ops);
+    }
+
+    function _ad(address feed, uint32 grace) internal view returns (DeployChainlinkPriceBandAdapterScript.Params memory) {
+        return DeployChainlinkPriceBandAdapterScript.Params({
+            signer: _signer(), owner: safe, uptimeFeed: feed, gracePeriod: grace, target: CreateXTest.target(deployer, bytes11("ad"))
+        });
+    }
+
+    function test_adapter_localChain_noUptimeFeed() public {
+        ChainlinkPriceBandAdapter a = adScript.runWith(_ad(address(0), 0));
+        assertEq(a.owner(), safe);
+        assertFalse(a.sequencerCheckEnabled());
+    }
+
+    function test_adapter_localChain_withUptimeFeed() public {
+        UptimeFeedStub f = new UptimeFeedStub(0);
+        ChainlinkPriceBandAdapter a = adScript.runWith(_ad(address(f), 3600));
+        assertTrue(a.sequencerCheckEnabled());
+        assertEq(a.sequencerGracePeriod(), 3600);
+    }
+
+    function test_adapter_refusesGraceWithoutFeed() public {
+        vm.expectRevert(bytes("RWA_SEQUENCER_GRACE_SECONDS must be 0 when there is no uptime feed"));
+        adScript.checkSequencerPolicy(address(0), 3600);
+    }
+
+    function test_adapter_refusesAGraceOutsideBounds() public {
+        UptimeFeedStub f = new UptimeFeedStub(0);
+        vm.expectRevert(bytes("RWA_SEQUENCER_GRACE_SECONDS outside [600, 86400]"));
+        adScript.checkSequencerPolicy(address(f), 3_600_000);
+    }
+
+    function test_adapter_refusesASequencerThatIsDown() public {
+        UptimeFeedStub f = new UptimeFeedStub(1);
+        vm.expectRevert(bytes("the sequencer reads DOWN right now; do not deploy into an outage"));
+        adScript.checkSequencerPolicy(address(f), 3600);
+    }
+
+    function test_adapter_productionChainWithoutARow_failsClosed() public {
+        vm.chainId(485590);
+        vm.expectRevert(bytes("no sequencer-uptime policy is recorded for this production chain; add a row to this script"));
+        adScript.checkSequencerPolicy(address(0), 0);
+    }
+
+    /*//////////////////////////////////////////////////////////////
+        THE PER-CHAIN SEQUENCER POLICY (RwaReleaseBase.sequencerPolicyFor)
+    //////////////////////////////////////////////////////////////*/
+
+    address internal constant BASE_UPTIME_FEED = 0xBCF85224fc0756B9Fa45aA7892530B47e10b6433;
+
+    function test_policy_rowsAreExactlyTheRecordedChains() public view {
+        (bool recorded, address feed) = adScript.sequencerPolicyFor(8453);
+        assertTrue(recorded);
+        assertEq(feed, BASE_UPTIME_FEED);
+        (recorded, feed) = adScript.sequencerPolicyFor(1);
+        assertTrue(recorded);
+        assertEq(feed, address(0));
+        (recorded, feed) = adScript.sequencerPolicyFor(56);
+        assertTrue(recorded);
+        assertEq(feed, address(0));
+        // Everything else is unrecorded, and an unrecorded production chain is refused.
+        uint256[8] memory others = [uint256(999), 4663, 143, 57073, 25, 59144, 5042, 6714];
+        for (uint256 i = 0; i < others.length; i++) {
+            (recorded,) = adScript.sequencerPolicyFor(others[i]);
+            assertFalse(recorded);
+        }
+    }
+
+    function test_policy_base_requiresTheRecordedFeedAndNothingElse() public {
+        vm.chainId(8453);
+        UptimeFeedStub impostor = new UptimeFeedStub(0);
+        vm.expectRevert(bytes("RWA_SEQUENCER_UPTIME_FEED is not the feed recorded for this chain"));
+        adScript.checkSequencerPolicy(address(impostor), 3600);
+        vm.expectRevert(bytes("RWA_SEQUENCER_UPTIME_FEED is not the feed recorded for this chain"));
+        adScript.checkSequencerPolicy(address(0), 0);
+
+        vm.etch(BASE_UPTIME_FEED, address(new UptimeFeedStub(0)).code);
+        adScript.checkSequencerPolicy(BASE_UPTIME_FEED, 3600);
+        crossScript.checkSequencerPolicy(BASE_UPTIME_FEED, 3600);
+    }
+
+    function test_policy_l1Chains_requireNoFeed() public {
+        UptimeFeedStub f = new UptimeFeedStub(0);
+        uint256[2] memory l1 = [uint256(1), 56];
+        for (uint256 i = 0; i < l1.length; i++) {
+            vm.chainId(l1[i]);
+            adScript.checkSequencerPolicy(address(0), 0);
+            crossScript.checkSequencerPolicy(address(0), 0);
+            vm.expectRevert(bytes("RWA_SEQUENCER_UPTIME_FEED is not the feed recorded for this chain"));
+            adScript.checkSequencerPolicy(address(f), 3600);
+        }
+    }
+
+    /*//////////////////////////////////////////////////////////////
+                  THE TWO-FEED ADAPTER'S DEPLOY SCRIPT
+    //////////////////////////////////////////////////////////////*/
+
+    function _cross(address feed, uint32 grace)
+        internal
+        view
+        returns (DeployChainlinkCrossPriceBandAdapterScript.Params memory)
+    {
+        return DeployChainlinkCrossPriceBandAdapterScript.Params({
+            signer: _signer(), owner: safe, uptimeFeed: feed, gracePeriod: grace, target: CreateXTest.target(deployer, bytes11("cross"))
+        });
+    }
+
+    function test_cross_localChain_noUptimeFeed() public {
+        ChainlinkCrossPriceBandAdapter a = crossScript.runWith(_cross(address(0), 0));
+        assertEq(a.owner(), safe);
+        assertEq(a.pendingOwner(), address(0));
+        assertFalse(a.sequencerCheckEnabled());
+        vm.expectRevert(ChainlinkCrossPriceBandAdapter.RenounceDisabled.selector);
+        vm.prank(safe);
+        a.renounceOwnership();
+    }
+
+    function test_cross_localChain_withUptimeFeed() public {
+        UptimeFeedStub f = new UptimeFeedStub(0);
+        ChainlinkCrossPriceBandAdapter a = crossScript.runWith(_cross(address(f), 3600));
+        assertTrue(a.sequencerCheckEnabled());
+        assertEq(a.sequencerUptimeFeed(), address(f));
+        assertEq(a.sequencerGracePeriod(), 3600);
+    }
+
+    function test_cross_refusesAnEoaOwnerAndTheDeployerAsOwner() public {
+        DeployChainlinkCrossPriceBandAdapterScript.Params memory p = _cross(address(0), 0);
+        p.owner = makeAddr("eoa");
+        vm.expectRevert();
+        crossScript.runWith(p);
+        p.owner = deployer;
+        vm.expectRevert();
+        crossScript.runWith(p);
+    }
+
+    function test_cross_productionChainWithoutARow_failsClosed() public {
+        vm.chainId(485590);
+        vm.expectRevert(bytes("no sequencer-uptime policy is recorded for this production chain; add a row to this script"));
+        crossScript.checkSequencerPolicy(address(0), 0);
+    }
+
+    function test_cross_cannotBeDeployedTwice() public {
+        crossScript.runWith(_cross(address(0), 0));
+        vm.expectRevert(bytes("the predicted address already has code on this chain (CHAINLINK_CROSS_PRICE_BAND_ADAPTER)"));
+        crossScript.runWith(_cross(address(0), 0));
+    }
+
+    function test_oracle_deploysOwnedBySafe_emptyAtBirth() public {
+        AllowlistComplianceOracle o = orScript.runWith(
+            DeployAllowlistComplianceOracleScript.Params({
+                signer: _signer(), owner: safe, target: CreateXTest.target(deployer, bytes11("or"))
+            })
+        );
+        assertEq(o.owner(), safe);
+        assertFalse(o.isPermitted(deployer));
+    }
+
+    function test_createX_refusesASecondDeployAtTheSameSalt() public {
+        mhScript.runWith(_mh(safe, ops));
+        vm.expectRevert(bytes("the predicted address already has code on this chain (MARKET_HOURS_HOOK)"));
+        mhScript.runWith(_mh(safe, ops));
+    }
+}

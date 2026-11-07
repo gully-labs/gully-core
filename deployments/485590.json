@@ -1,0 +1,414 @@
+{
+  "chainId": 485590,
+  "product": "Gully Core",
+  "version": "1.0.0-testnet",
+  "deployedAt": "2026-11-06",
+  "governanceSafe": "0xC5526E28B5cDe3C5962A224896804a499d5bb240",
+  "feeRecipient": "0xC5526E28B5cDe3C5962A224896804a499d5bb240",
+  "launchRelease": 3,
+  "installedFeeController": "0x8aE0C023A4e345Ff9D14E123848816ad332fDe95",
+  "reused": {
+    "createX": "0xba5Ed099633D3B313e4D5F7bdc1305d3c28ba5Ed",
+    "permit2": "0x000000000022D473030F116dDEE9F6B43aC78BA3",
+    "weth9": "0x26aCCCb2e98ca9e067E58668Aa3B101beF432754",
+    "usdcE": "0x65Ba03c6FA90Ed549f465D4c8f2e784D6eEB7E76",
+    "arachnid": "0x4e59b44847b379578588920cA78FbF26c0B4956C",
+    "safeL2Singleton": "0x76667330c237Fb40f28d74563cdAAae4b06C23Ec",
+    "safeProxyFactory": "0xd9d2Ba03a7754250FDD71333F444636471CACBC4"
+  },
+  "network": "Gully Chain Testnet",
+  "explorer": "https://testnet-explorer.gullychain.xyz",
+  "verifiedOn": "https://verify.gullychain.xyz",
+  "contracts": {
+    "governanceSafe": {
+      "address": "0xC5526E28B5cDe3C5962A224896804a499d5bb240",
+      "package": "-",
+      "contract": "Safe L2 1.4.1 proxy",
+      "sourcify": "exact_match"
+    },
+    "vault": {
+      "address": "0x90c882D9C307c2bF7E961bC279b0929f92997dD4",
+      "package": "core",
+      "contract": "Vault",
+      "sourcify": "match"
+    },
+    "clPoolManager": {
+      "address": "0x6D0721230b6beD4bc9eeb65E200B6f90c2C9aEE6",
+      "package": "core",
+      "contract": "CLPoolManager",
+      "sourcify": "match"
+    },
+    "binPoolManager": {
+      "address": "0x4255B0B14F3dd4e2350954Da78707E3fA6c94E2B",
+      "package": "core",
+      "contract": "BinPoolManager",
+      "sourcify": "match"
+    },
+    "clPoolManagerOwner": {
+      "address": "0xAC57987b453533e3D67881026dA5CA271A7c7438",
+      "package": "core",
+      "contract": "CLPoolManagerOwner",
+      "sourcify": "match"
+    },
+    "binPoolManagerOwner": {
+      "address": "0xF8b4B5b1444fC2843BcA72b56d094a947b63654a",
+      "package": "core",
+      "contract": "BinPoolManagerOwner",
+      "sourcify": "match"
+    },
+    "clPositionDescriptor": {
+      "address": "0x8504aD36c38D34b31B431169530eC56340e1dF5f",
+      "package": "periphery",
+      "contract": "CLPositionDescriptorOffChain",
+      "sourcify": "match"
+    },
+    "clPositionManager": {
+      "address": "0x337c8E7B40132B677db2b99445EbC6B3835fd7A4",
+      "package": "periphery",
+      "contract": "CLPositionManager",
+      "sourcify": "match"
+    },
+    "binPositionManager": {
+      "address": "0xC1EEF3aaf142dffDe6551a557E9700DB12817719",
+      "package": "periphery",
+      "contract": "BinPositionManager",
+      "sourcify": "match"
+    },
+    "clQuoter": {
+      "address": "0xAFFd2FcE14990C624aDf076C479a098Fa37b35eb",
+      "package": "periphery",
+      "contract": "CLQuoter",
+      "sourcify": "match"
+    },
+    "binQuoter": {
+      "address": "0x4206Bb61C793027EcfB2d56e91Be78a5ba3b0BDB",
+      "package": "periphery",
+      "contract": "BinQuoter",
+      "sourcify": "match"
+    },
+    "mixedQuoter": {
+      "address": "0x8b9F914e7a6CF966D6826dAC965499E43a91e55F",
+      "package": "periphery",
+      "contract": "MixedQuoter",
+      "sourcify": "match"
+    },
+    "clTickLens": {
+      "address": "0x46B2C141271f676c1bdd1174BB05120e48990e64",
+      "package": "periphery",
+      "contract": "TickLens",
+      "sourcify": "match"
+    },
+    "universalRouter": {
+      "address": "0xb6ab6f0D23c769329DB4b3CFB947fDe3a9e797A5",
+      "package": "router",
+      "contract": "UniversalRouter",
+      "sourcify": "match"
+    },
+    "feeControllerV2": {
+      "address": "0x241F54124d43A6c921c5f6e8D2915b6a1DD94592",
+      "package": "fees",
+      "contract": "GullyCoreProtocolFeeControllerV2",
+      "sourcify": "match"
+    },
+    "registry": {
+      "address": "0x352e2881Ae34bCcF8e6bB3BC38dC0Ffe9e99Aa2a",
+      "package": "registry",
+      "contract": "GullyCoreRegistry",
+      "sourcify": "match"
+    },
+    "launchRegistry": {
+      "address": "0x232B22f21cF12Db740df21DE09915eC7F6e61039",
+      "package": "registry",
+      "contract": "GullyCoreLaunchRegistry",
+      "sourcify": "match"
+    },
+    "lpLocker": {
+      "address": "0x9a88B84193F790CD3E8d99594d67F83cE6900097",
+      "package": "launchpad",
+      "contract": "GullyCoreLPLocker",
+      "sourcify": "match"
+    },
+    "launchTokenFactory": {
+      "address": "0xc43AcDa7f74AA372Cab96E58C97Eb9a62cf1BE70",
+      "package": "launchpad",
+      "contract": "LaunchTokenFactory",
+      "sourcify": "match"
+    },
+    "binLpLocker": {
+      "address": "0x98A0dC1FE694DB36eEdf767f976792eA00F20e68",
+      "package": "launchpad",
+      "contract": "GullyCoreBinLPLocker",
+      "sourcify": "match"
+    },
+    "launchGuardHook": {
+      "address": "0xB4553D0e24E4d541c620612A99c816a89aA4f30A",
+      "package": "launchpad",
+      "contract": "LaunchGuardHook",
+      "sourcify": "match"
+    },
+    "binLaunchGuardHook": {
+      "address": "0x9D3B43CD5c5df9810B044b0694669b206646A70E",
+      "package": "launchpad",
+      "contract": "BinLaunchGuardHook",
+      "sourcify": "match"
+    },
+    "launchLegs": {
+      "address": "0x72f5d873464899C163C7330909b371B452D37cA6",
+      "package": "launchpad",
+      "contract": "LaunchLegs",
+      "sourcify": "match"
+    },
+    "launchpadKitV2": {
+      "address": "0xb204c2c6CB7Ad0758Fa90B73E1B0e2405A510636",
+      "package": "launchpad",
+      "contract": "LaunchpadKitV2",
+      "sourcify": "match"
+    },
+    "feeControllerV4": {
+      "address": "0xffCB8992d5B221ED85c05b0Fe642bF329b3A4cf4",
+      "package": "fees",
+      "contract": "GullyCoreProtocolFeeControllerV4",
+      "sourcify": "match"
+    },
+    "dynamicFeeHook": {
+      "address": "0xB2Fc45D22683beC1e72Ec5D316d910294551bA00",
+      "package": "hooks",
+      "contract": "GullyCoreDynamicFeeHook",
+      "sourcify": "match"
+    },
+    "binDynamicFeeHook": {
+      "address": "0x8664b12e10a5A1FE86c47481333Bf56894b68BBd",
+      "package": "hooks",
+      "contract": "GullyCoreBinDynamicFeeHook",
+      "sourcify": "match"
+    },
+    "dexHook": {
+      "address": "0x26F5e7144dBe0ADB6767D7889b79e50693d50E5D",
+      "package": "hooks",
+      "contract": "GullyCoreDexHook",
+      "sourcify": "match"
+    },
+    "oracleHook": {
+      "address": "0xA8F9049ec5a0b8D4451a3915606ac83278798eB9",
+      "package": "hooks",
+      "contract": "GullyCoreOracleHook",
+      "sourcify": "match"
+    },
+    "revShareHook": {
+      "address": "0xFcf532aFA09F822BC5c89f7a004CBd4d0BDCBf1c",
+      "package": "hooks-revshare",
+      "contract": "RevShareHook",
+      "sourcify": "match"
+    },
+    "tunerGate": {
+      "address": "0xED0C799f0fe1BfDf85E9298BF6383d0526331Cd0",
+      "package": "governance",
+      "contract": "GullyCoreTunerGate",
+      "sourcify": "match"
+    },
+    "padFactory": {
+      "address": "0xFB740b71F8548b013f921dC331e5662f8bc5b7BD",
+      "package": "launchpad",
+      "contract": "GullyCorePadFactory",
+      "sourcify": "match"
+    },
+    "splitFactory": {
+      "address": "0x6e38c46A7f836896E635c28afE98b022f93D01df",
+      "package": "launchpad",
+      "contract": "GullyCoreSplitFactory",
+      "sourcify": "match"
+    },
+    "positionLock": {
+      "address": "0x7b63b4C482E23C423ED65a8648358C5417703Ea3",
+      "package": "launchpad",
+      "contract": "GullyCorePositionLock",
+      "sourcify": "match"
+    },
+    "tokenLock": {
+      "address": "0x593a98b20A78538432571cb90704A234fa9D7ED5",
+      "package": "launchpad",
+      "contract": "GullyCoreTokenLock",
+      "sourcify": "match"
+    },
+    "multisend": {
+      "address": "0x0D13fC3102079CBA6c2629c8de003DD3cB333bc4",
+      "package": "launchpad",
+      "contract": "GullyCoreMultisend",
+      "sourcify": "match"
+    },
+    "dropFactory": {
+      "address": "0x3259f54374e4970c908112c1682F000612d5D422",
+      "package": "launchpad",
+      "contract": "GullyCoreDropFactory",
+      "sourcify": "match"
+    },
+    "launchAndBuy": {
+      "address": "0xA2098A55A9C6A01aBFcd71F56c018014f6a7Ea9C",
+      "package": "launch-periphery",
+      "contract": "GullyCoreLaunchAndBuy",
+      "sourcify": "match"
+    },
+    "fillRouter": {
+      "address": "0x7577aEcB9862a7a6022Dcf1D3a3623ED91EdD9c6",
+      "package": "routing",
+      "contract": "GullyCoreFillRouter",
+      "sourcify": "match"
+    },
+    "rangeOrders": {
+      "address": "0x66a92Db09eB576bb90C0d1C209AeB160bAdE91E9",
+      "package": "orders",
+      "contract": "GullyCoreRangeOrders",
+      "sourcify": "match"
+    },
+    "dca": {
+      "address": "0x5D39079CE27819682613b67D3EB13D88B3A1146F",
+      "package": "orders",
+      "contract": "GullyCoreDCA",
+      "sourcify": "match"
+    },
+    "vaultFactory": {
+      "address": "0xDB61faBF2B15654edB01c25E162ae579f729407F",
+      "package": "vaults",
+      "contract": "GullyCoreVaultFactory",
+      "sourcify": "match"
+    },
+    "managedVaultImplementation": {
+      "address": "0xe0Dc3211294F5e00677051B00816015934cCD835",
+      "package": "vaults",
+      "contract": "GullyCoreManagedVault",
+      "sourcify": "match"
+    },
+    "liquidityRewardsHook": {
+      "address": "0xb6E700a7fdC274f85E521A49159503d54E23fE4e",
+      "package": "lp-rewards",
+      "contract": "GullyCoreLiquidityRewardsHook",
+      "sourcify": "match"
+    },
+    "launchGuardHookV1": {
+      "address": "0xAc79571DB68bF84012Ea986d25Bd09c6de6d4935",
+      "package": "launchpad",
+      "contract": "LaunchGuardHook",
+      "sourcify": "match"
+    },
+    "binLaunchGuardHookV1": {
+      "address": "0x01c7F3E6d9715FB5240b666ef963C61138694Cab",
+      "package": "launchpad",
+      "contract": "BinLaunchGuardHook",
+      "sourcify": "match"
+    },
+    "launchLegsV1": {
+      "address": "0xE3e49aF19f2ed8Dfe8F0380e70796e7Bd69Cf777",
+      "package": "launchpad",
+      "contract": "LaunchLegs",
+      "sourcify": "match"
+    },
+    "launchpadKitV2V1": {
+      "address": "0xd46543Fcb42878868eBA0C62ea1F7801a357B12D",
+      "package": "launchpad",
+      "contract": "LaunchpadKitV2",
+      "sourcify": "match"
+    },
+    "feeControllerV4V1": {
+      "address": "0x31bC6C47df76225f3A3172A239B9BB485224b847",
+      "package": "fees",
+      "contract": "GullyCoreProtocolFeeControllerV4",
+      "sourcify": "match"
+    },
+    "padFactoryV1": {
+      "address": "0x2D7dcdfC94C014f64E5F23b7A3E79df759183080",
+      "package": "launchpad",
+      "contract": "GullyCorePadFactory",
+      "sourcify": "match"
+    },
+    "launchAndBuyV1": {
+      "address": "0x3A447F552146Aa05262fd98603C9B1394267ce5B",
+      "package": "launch-periphery",
+      "contract": "GullyCoreLaunchAndBuy",
+      "sourcify": "match"
+    },
+    "lpLockerV1": {
+      "address": "0x0Ca509787bf2C6a241761586d02885b9719aca5f",
+      "package": "launchpad",
+      "contract": "GullyCoreLPLocker",
+      "sourcify": "match"
+    },
+    "binLpLockerV1": {
+      "address": "0x444719a68d039639655EDC943F1826cC2835c5a5",
+      "package": "launchpad",
+      "contract": "GullyCoreBinLPLocker",
+      "sourcify": "match"
+    },
+    "launchTokenFactoryV1": {
+      "address": "0xC36E33Ef98Bf83d4D3A016dBa32822303f30cCB8",
+      "package": "launchpad",
+      "contract": "LaunchTokenFactory",
+      "sourcify": "match"
+    },
+    "launchGuardHookV2": {
+      "address": "0x0Cf9A6a75F7C83dDb8B22b59757d7118931aE2A9",
+      "package": "launchpad",
+      "contract": "LaunchGuardHook",
+      "sourcify": "match"
+    },
+    "binLaunchGuardHookV2": {
+      "address": "0x9a8dD4f4710708cAEE94E5704e5D45b93235b59B",
+      "package": "launchpad",
+      "contract": "BinLaunchGuardHook",
+      "sourcify": "match"
+    },
+    "launchLegsV2": {
+      "address": "0xFfF4ac7F8Dcf9a9d74691099fc2FEdd67F6E19f9",
+      "package": "launchpad",
+      "contract": "LaunchLegs",
+      "sourcify": "match"
+    },
+    "launchpadKitV2V2": {
+      "address": "0xE8Bbf42a7583C71085F26dd5c31Cb1e5448B0545",
+      "package": "launchpad",
+      "contract": "LaunchpadKitV2",
+      "sourcify": "match"
+    },
+    "padFactoryV2": {
+      "address": "0xfDC3c29332ED2E77663178A9E85F6844961928D2",
+      "package": "launchpad",
+      "contract": "GullyCorePadFactory",
+      "sourcify": "match"
+    },
+    "launchAndBuyV2": {
+      "address": "0xB75Cf5dbAFde7E896412Cd9b8a4cE22f881B593a",
+      "package": "launch-periphery",
+      "contract": "GullyCoreLaunchAndBuy",
+      "sourcify": "match"
+    },
+    "launchPolicy": {
+      "address": "0xf63a3359f9174C37131adbd2D3AB17b3e9De4041",
+      "package": "launchpad",
+      "contract": "LaunchPolicy",
+      "sourcify": "match"
+    },
+    "padImplementation": {
+      "address": "0x9199602A03696401bc7E15343E7D9CA00997Efb4",
+      "package": "launchpad",
+      "contract": "GullyCorePad",
+      "sourcify": "match"
+    },
+    "padImplementationV1": {
+      "address": "0xC7dbdf8f76A7b3b9A32ac278c80aeE5368cd89cf",
+      "package": "launchpad",
+      "contract": "GullyCorePad",
+      "sourcify": "match"
+    },
+    "padImplementationV2": {
+      "address": "0x3642DB547c0B2D967242a4BA2c74362A4c87Eb76",
+      "package": "launchpad",
+      "contract": "GullyCorePad",
+      "sourcify": "match"
+    },
+    "feeControllerV5": {
+      "address": "0x8aE0C023A4e345Ff9D14E123848816ad332fDe95",
+      "package": "fees",
+      "contract": "GullyCoreProtocolFeeControllerV5",
+      "sourcify": "match"
+    }
+  }
+}

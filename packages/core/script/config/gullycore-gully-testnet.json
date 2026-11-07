@@ -1,0 +1,15 @@
+{
+    "_comment": "Gully Core - Gully Chain testnet (485590). EIP-1153 probed live 2026-10-28 (TSTORE/TLOAD and MCOPY execute): default profile.",
+    "_chainId": 485590,
+    "_supportsEip1153": true,
+    "_ownerNote": "poolOwner / protocolFeeControllerOwner = the Gully Core TESTNET governance Safe (GullyCoreGovernance testnet record). Left as \"0x\" so a deploy fails loudly until the Safe exists on chain and is written here by the release run. Never an EOA and never the deployer.",
+    "poolOwner": "0x",
+    "protocolFeeControllerOwner": "0x",
+    "vault": "0x",
+    "clPoolManager": "0x",
+    "binPoolManager": "0x",
+    "clProtocolFeeController": "0x",
+    "binProtocolFeeController": "0x",
+    "clPoolManagerOwnerContract": "0x",
+    "binPoolManagerOwnerContract": "0x"
+}

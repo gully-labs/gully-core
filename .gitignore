@@ -1,0 +1,11 @@
+foundry-out*/
+cache*/
+broadcast/
+node_modules/
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+.acceptance/
+packages/*/script/config/*.release.json

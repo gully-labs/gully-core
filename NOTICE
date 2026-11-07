@@ -1,0 +1,25 @@
+Gully Core
+Copyright (C) 2026 Gully Labs (modifications)
+
+This program is free software; you can redistribute it and/or modify it under the terms of the GNU
+General Public License as published by the Free Software Foundation; either version 2 of the License,
+or (at your option) any later version. See LICENSE.
+
+This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even
+the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+License for more details.
+
+Gully Core is a modified work. It is built on PancakeSwap Infinity:
+  https://github.com/pancakeswap/infinity-core               at 3c5ef1be
+  https://github.com/pancakeswap/infinity-periphery          at 56a7a4f5
+  https://github.com/pancakeswap/infinity-universal-router   at 1b6d479e
+
+The full upstream lineage is in the "Source and licence" section of README.md. Every source file keeps
+its original SPDX line and copyright notices; files changed by Gully Labs also carry a modification
+notice. Files that are unchanged from PancakeSwap Infinity are listed in docs/UPSTREAM-IDENTICAL.sha256.
+
+Third-party libraries are included as git submodules under their own licences:
+  forge-std, OpenZeppelin Contracts, solmate, permit2.
+
+The Gully Labs and Gully Core names, logos and badges in branding/ are not licensed under the GPL and
+are provided to identify the project. See branding/README.md.
