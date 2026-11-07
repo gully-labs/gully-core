@@ -38,7 +38,14 @@ managed vaults and liquidity rewards, each with its tests and deploy scripts.
 | Network | Chain id | Status | Addresses |
 |---|---|---|---|
 | Gully Chain Testnet | 485590 | Live, 65 contracts, source-verified | [`deployments/485590.json`](deployments/485590.json) |
-| Anubis, HyperEVM, BNB Chain, Robinhood Chain, Base | 6714, 999, 56, 4663, 8453 | Not deployed yet | |
+| Anubis | 6714 | Live, 48 contracts, source-verified on Sourcify, explorer verification pending, no pools yet | [`deployments/6714.json`](deployments/6714.json) |
+| HyperEVM, BNB Chain, Robinhood Chain, Base | 999, 56, 4663, 8453 | Not deployed yet | |
+
+Builders start with the [integration guide](docs/integration-guide.md).
+
+On Anubis, gasDAI pays gas and nothing else: a transaction cannot carry a value, and there is no native pool
+and no wrapped native. Quote in the ERC-20 DAI. `eth_getLogs` serves 5,000 blocks a request, and Multicall3 is not at
+the canonical address. Both are in the guide.
 
 Main entry points on Gully Chain Testnet, current launch release:
 
