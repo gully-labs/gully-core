@@ -9,8 +9,8 @@ Include the affected contract and package, the chain and address if it is deploy
 steps or a test that reproduces it. A Foundry test is the most useful form.
 
 We will acknowledge a report as soon as we can and keep you informed while it is fixed. Please give us
-reasonable time to fix a problem before disclosing it, and do not test against mainnet contracts or
-other people's funds; use a local fork or Gully Chain Testnet.
+reasonable time to fix a problem before disclosing it, and do not test against mainnet contracts,
+including Anubis, or other people's funds; use a local fork or Gully Chain Testnet.
 
 ## Scope
 
