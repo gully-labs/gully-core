@@ -17,7 +17,7 @@
     "safeProxyFactory": "0xd9d2Ba03a7754250FDD71333F444636471CACBC4"
   },
   "network": "Gully Chain Testnet",
-  "explorer": "https://testnet-explorer.gullychain.xyz",
+  "explorer": "https://testnet.gullyscan.xyz",
   "verifiedOn": "https://verify.gullychain.xyz",
   "contracts": {
     "governanceSafe": {
