@@ -39,7 +39,10 @@ managed vaults and liquidity rewards, each with its tests and deploy scripts.
 |---|---|---|---|
 | Gully Chain Testnet | 485590 | Live, 65 contracts, source-verified | [`deployments/485590.json`](deployments/485590.json) |
 | Anubis | 6714 | Live, 48 contracts, source-verified on Sourcify, explorer verification pending, no pools yet | [`deployments/6714.json`](deployments/6714.json) |
-| HyperEVM, BNB Chain, Robinhood Chain, Base | 999, 56, 4663, 8453 | Not deployed yet | |
+| Robinhood Chain | 4663 | Live, 45 contracts, source-verified on Sourcify | [`deployments/4663.json`](deployments/4663.json) |
+| BNB Chain | 56 | Live, 45 contracts, source-verified on Sourcify | [`deployments/56.json`](deployments/56.json) |
+| Base | 8453 | Live, 45 contracts, source-verified on Sourcify | [`deployments/8453.json`](deployments/8453.json) |
+| HyperEVM | 999 | On hold, not deployed | |
 
 Builders start with the [integration guide](docs/integration-guide.md).
 
