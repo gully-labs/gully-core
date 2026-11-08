@@ -20,7 +20,7 @@
   "explorer": "https://robinhoodchain.blockscout.com",
   "rpc": "https://rpc.mainnet.chain.robinhood.com",
   "verifiedOn": "https://sourcify.dev",
-  "pools": 0,
+  "pools": null,
   "contracts": {
     "vault": {
       "address": "0x90c882D9C307c2bF7E961bC279b0929f92997dD4",
