@@ -51,16 +51,16 @@ Main entry points on Gully Chain Testnet, current launch release:
 
 | Contract | Address |
 |---|---|
-| `LaunchpadKitV2` | [`0xb204c2c6CB7Ad0758Fa90B73E1B0e2405A510636`](https://testnet-explorer.gullychain.xyz/address/0xb204c2c6CB7Ad0758Fa90B73E1B0e2405A510636) |
-| `GullyCorePadFactory` | [`0xFB740b71F8548b013f921dC331e5662f8bc5b7BD`](https://testnet-explorer.gullychain.xyz/address/0xFB740b71F8548b013f921dC331e5662f8bc5b7BD) |
-| `Vault` | [`0x90c882D9C307c2bF7E961bC279b0929f92997dD4`](https://testnet-explorer.gullychain.xyz/address/0x90c882D9C307c2bF7E961bC279b0929f92997dD4) |
-| `UniversalRouter` | [`0xb6ab6f0D23c769329DB4b3CFB947fDe3a9e797A5`](https://testnet-explorer.gullychain.xyz/address/0xb6ab6f0D23c769329DB4b3CFB947fDe3a9e797A5) |
-| `MixedQuoter` | [`0x8b9F914e7a6CF966D6826dAC965499E43a91e55F`](https://testnet-explorer.gullychain.xyz/address/0x8b9F914e7a6CF966D6826dAC965499E43a91e55F) |
-| `GullyCoreProtocolFeeControllerV5` | [`0x8aE0C023A4e345Ff9D14E123848816ad332fDe95`](https://testnet-explorer.gullychain.xyz/address/0x8aE0C023A4e345Ff9D14E123848816ad332fDe95) |
-| `GullyCoreLaunchRegistry` | [`0x232B22f21cF12Db740df21DE09915eC7F6e61039`](https://testnet-explorer.gullychain.xyz/address/0x232B22f21cF12Db740df21DE09915eC7F6e61039) |
+| `LaunchpadKitV2` | [`0xb204c2c6CB7Ad0758Fa90B73E1B0e2405A510636`](https://testnet.gullyscan.xyz/address/0xb204c2c6CB7Ad0758Fa90B73E1B0e2405A510636) |
+| `GullyCorePadFactory` | [`0xFB740b71F8548b013f921dC331e5662f8bc5b7BD`](https://testnet.gullyscan.xyz/address/0xFB740b71F8548b013f921dC331e5662f8bc5b7BD) |
+| `Vault` | [`0x90c882D9C307c2bF7E961bC279b0929f92997dD4`](https://testnet.gullyscan.xyz/address/0x90c882D9C307c2bF7E961bC279b0929f92997dD4) |
+| `UniversalRouter` | [`0xb6ab6f0D23c769329DB4b3CFB947fDe3a9e797A5`](https://testnet.gullyscan.xyz/address/0xb6ab6f0D23c769329DB4b3CFB947fDe3a9e797A5) |
+| `MixedQuoter` | [`0x8b9F914e7a6CF966D6826dAC965499E43a91e55F`](https://testnet.gullyscan.xyz/address/0x8b9F914e7a6CF966D6826dAC965499E43a91e55F) |
+| `GullyCoreProtocolFeeControllerV5` | [`0x8aE0C023A4e345Ff9D14E123848816ad332fDe95`](https://testnet.gullyscan.xyz/address/0x8aE0C023A4e345Ff9D14E123848816ad332fDe95) |
+| `GullyCoreLaunchRegistry` | [`0x232B22f21cF12Db740df21DE09915eC7F6e61039`](https://testnet.gullyscan.xyz/address/0x232B22f21cF12Db740df21DE09915eC7F6e61039) |
 
 Owner and every protocol fee recipient on testnet is the governance Safe
-[`0xC5526E28B5cDe3C5962A224896804a499d5bb240`](https://testnet-explorer.gullychain.xyz/address/0xC5526E28B5cDe3C5962A224896804a499d5bb240),
+[`0xC5526E28B5cDe3C5962A224896804a499d5bb240`](https://testnet.gullyscan.xyz/address/0xC5526E28B5cDe3C5962A224896804a499d5bb240),
 a testnet-only 1-of-1. Not deployed on testnet: `packages/hooks-rwa`, the votes token and the custody
 timelock.
 
