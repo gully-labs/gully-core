@@ -8,7 +8,7 @@
 </p>
 
 <p align="center">
-  <a href="https://gullychain.xyz/gully-core/">
+  <a href="https://gullycore.xyz/">
     <picture>
       <source media="(prefers-color-scheme: dark)" srcset="branding/gully-core-mark-dark.svg">
       <img src="branding/gully-core-mark-light.svg" alt="Gully Core" width="146" height="24">
@@ -190,3 +190,5 @@ notice. The files that are byte-identical to PancakeSwap Infinity are listed in
 
 Report vulnerabilities privately: see [`SECURITY.md`](SECURITY.md). Contributions: see
 [`CONTRIBUTING.md`](CONTRIBUTING.md).
+
+<p align="center"><sub>Community: <a href="https://t.me/GullyChain">Telegram news</a> · <a href="https://t.me/GullyChainDeploys">Deploys</a> · <a href="https://t.me/GullyBuyBot">BuyBot</a> · <a href="https://t.me/GullyChainBot">Chain Bot</a> · <a href="https://discord.com/invite/tY2ErsNNBp">Discord</a></sub></p>

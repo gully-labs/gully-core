@@ -29,7 +29,9 @@ bytecode_hash = "none"
 
 # added due to v1.0 foundry
 # ref: https://book.getfoundry.sh/guides/v1.0-migration#expect-revert-cheatcode-disabled-on-internal-calls-by-default
-allow_internal_expect_revert = false
+# Gully Core 2026-11-08: true here only. These suites call library functions directly under vm.expectRevert; with false
+# forge answers "call didn't revert at a lower depth than cheatcode call depth" for them. Other packages stay false.
+allow_internal_expect_revert = true
 
 [fuzz]
 runs = 5 # change this for higher number of fuzz runs locally
@@ -67,7 +69,9 @@ ffi = true
 evm_version = 'shanghai'
 gas_limit = "300000000"
 bytecode_hash = "none"
-allow_internal_expect_revert = false
+# Gully Core 2026-11-08: true here only. These suites call library functions directly under vm.expectRevert; with false
+# forge answers "call didn't revert at a lower depth than cheatcode call depth" for them. Other packages stay false.
+allow_internal_expect_revert = true
 remappings = [
     "ds-test/=lib/forge-std/lib/ds-test/src/",
     "forge-std/=lib/forge-std/src/",
