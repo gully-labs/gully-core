@@ -4,8 +4,8 @@ For developers who launch tokens, run a launchpad or run a DEX on Gully Core. It
 (`LaunchpadKitV2`), the lockers, the pad factory and the fees you pay. Gully Core is built on PancakeSwap Infinity's audited core.
 Read the contracts in `packages/launchpad/src` for exact signatures.
 
-Addresses are not in this guide. Read them from `deployments/6714.json` and `deployments/485590.json`
-(links: [6714](../deployments/6714.json), [485590](../deployments/485590.json)).
+Addresses are not in this guide. Read them from `deployments/4663.json`, `deployments/6714.json` and `deployments/485590.json`
+(links: [4663](../deployments/4663.json), [6714](../deployments/6714.json), [485590](../deployments/485590.json)).
 
 The TypeScript SDK is `@gullylabs/core-sdk`. It is not on npm yet.
 
@@ -353,8 +353,12 @@ Errors from the guards, lockers, factory, registry and core come through unchang
 - Multicall3 is not at the canonical address. Do not hard-code it.
 - No pools exist yet.
 
+**Robinhood Chain (4663).** An Arbitrum Orbit chain with ETH as gas. Native pools work, and WETH is
+`0x0Bd7D308f8E1639FAb988df18A8011f41EAcAD73`. `block.number` here is the parent chain's block number, so use
+timestamps only for every duration. No pools exist yet.
+
 **Gully Chain Testnet (485590).** An Arbitrum Orbit chain. `block.number` here is the parent chain's block number,
 not a local one. This is another reason to use timestamps only.
 
-Contract addresses for both chains: [`deployments/6714.json`](../deployments/6714.json) and
+Contract addresses: [`deployments/4663.json`](../deployments/4663.json), [`deployments/6714.json`](../deployments/6714.json) and
 [`deployments/485590.json`](../deployments/485590.json).
