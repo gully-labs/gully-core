@@ -187,3 +187,5 @@ notice. The files that are byte-identical to PancakeSwap Infinity are listed in
 
 Report vulnerabilities privately: see [`SECURITY.md`](SECURITY.md). Contributions: see
 [`CONTRIBUTING.md`](CONTRIBUTING.md).
+
+<p align="center"><sub>Community: <a href="https://t.me/GullyChain">Telegram news</a> · <a href="https://t.me/GullyChainDeploys">Deploys</a> · <a href="https://t.me/GullyBuyBot">BuyBot</a> · <a href="https://t.me/GullyChainBot">Chain Bot</a> · <a href="https://discord.com/invite/tY2ErsNNBp">Discord</a></sub></p>
