@@ -403,7 +403,7 @@ contract GullyCoreLaunchAndBuyTest is LaunchAndBuyFixture {
     }
 
     /// @notice What the opening fee actually costs, measured: the same buy on a 10% FairLaunch and on
-    /// a 0.30% NoTax launch, same price, same range. The gap IS the fee.
+    /// a flat 1% NoTax launch, same price, same range. The gap IS the fee.
     function test_FEE_quantified_tenPercentIsTenPercent() public {
         LaunchParamsV2 memory fair = _oneCL(CREATOR, bytes32("q1"), address(quoteToken));
         vm.prank(CREATOR);
@@ -415,12 +415,17 @@ contract GullyCoreLaunchAndBuyTest is LaunchAndBuyFixture {
         (,, uint256 boughtNone,) = lab.launchAndBuy{value: _kitFee(none)}(none, _buy(1 ether));
 
         assertGt(boughtNone, boughtFair, "the taxed launch bought fewer tokens for the same money");
-        // 10% vs 0.30% taken from the input. The ideal ratio is (1 - 0.10) / (1 - 0.003) = 0.9027;
-        // the measured one is a shade under because the smaller taxed input also walks a shade less
-        // price. Bounded to 1% relative rather than pinned, because the residual IS price impact and
-        // pretending it is exactly the fee would be the kind of tidy number this repo does not print.
+        // 10% vs the flat 1% NoTax fee (since 2026-11-02; it was 0.30% before) taken from the input. The ideal
+        // ratio is (1 - 0.10) / (1 - 0.01) = 0.9091. The measured one is not exactly that, because each launch is
+        // its own pool and a pool's own price impact on a ~1 token buy differs by up to ~0.6%: on the default
+        // (cancun) build the 10% launch is the one that walks further (ratio 0.9036), on the legacy (shanghai)
+        // build the 1% launch is (0.9145). The two builds compile to different bytecode, so the launch tokens get
+        // different addresses; the likely cause is the resulting token order against the quote, which sets the
+        // direction of the buy (not isolated). Both are inside 1% of the ideal in opposite directions, so the
+        // bound is the same 1% relative on both builds, around the ideal for the fee that is actually charged.
+        // (The old centre, 0.9027, was the ideal for a 0.30% NoTax fee that no longer exists.)
         uint256 ratioBps = boughtFair * 10_000 / boughtNone;
-        assertApproxEqRel(ratioBps, uint256(9_000) * 10_000 / 9_970, 0.01e18, "the gap is the fee");
+        assertApproxEqRel(ratioBps, uint256(9_000) * 10_000 / 9_900, 0.01e18, "the gap is the fee");
     }
 
     /// @notice The kit's protocol fee can rise by itself when a scheduled increase matures. The
