@@ -8,7 +8,7 @@
 </p>
 
 <p align="center">
-  <a href="https://gullychain.xyz/gully-core/">
+  <a href="https://gullycore.xyz/">
     <picture>
       <source media="(prefers-color-scheme: dark)" srcset="branding/gully-core-mark-dark.svg">
       <img src="branding/gully-core-mark-light.svg" alt="Gully Core" width="146" height="24">
