@@ -4,8 +4,8 @@ For developers who launch tokens, run a launchpad or run a DEX on Gully Core. It
 (`LaunchpadKitV2`), the lockers, the pad factory and the fees you pay. Gully Core is built on PancakeSwap Infinity's audited core.
 Read the contracts in `packages/launchpad/src` for exact signatures.
 
-Addresses are not in this guide. Read them from `deployments/4663.json`, `deployments/6714.json` and `deployments/485590.json`
-(links: [4663](../deployments/4663.json), [6714](../deployments/6714.json), [485590](../deployments/485590.json)).
+Addresses are not in this guide. Read them from `deployments/56.json`, `deployments/4663.json`, `deployments/6714.json` and `deployments/485590.json`
+(links: [56](../deployments/56.json), [4663](../deployments/4663.json), [6714](../deployments/6714.json), [485590](../deployments/485590.json)).
 
 The TypeScript SDK is `@gullylabs/core-sdk`. It is not on npm yet.
 
@@ -357,8 +357,12 @@ Errors from the guards, lockers, factory, registry and core come through unchang
 `0x0Bd7D308f8E1639FAb988df18A8011f41EAcAD73`. `block.number` here is the parent chain's block number, so use
 timestamps only for every duration. No pools exist yet.
 
+**BNB Chain (56).** BNB is the gas token and quotes native pools. WBNB is
+`0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c`. `block.number` is the chain's own (about 0.45 s a block), so block-based
+windows are short: prefer timestamps. Public RPCs serve small `eth_getLogs` spans; page your event reads. No pools exist yet.
+
 **Gully Chain Testnet (485590).** An Arbitrum Orbit chain. `block.number` here is the parent chain's block number,
 not a local one. This is another reason to use timestamps only.
 
-Contract addresses: [`deployments/4663.json`](../deployments/4663.json), [`deployments/6714.json`](../deployments/6714.json) and
+Contract addresses: [`deployments/56.json`](../deployments/56.json), [`deployments/4663.json`](../deployments/4663.json), [`deployments/6714.json`](../deployments/6714.json) and
 [`deployments/485590.json`](../deployments/485590.json).
