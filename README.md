@@ -42,6 +42,7 @@ managed vaults and liquidity rewards, each with its tests and deploy scripts.
 | Robinhood Chain | 4663 | Live, 45 contracts, source-verified on Sourcify | [`deployments/4663.json`](deployments/4663.json) |
 | BNB Chain | 56 | Live, 45 contracts, source-verified on Sourcify | [`deployments/56.json`](deployments/56.json) |
 | Base | 8453 | Live, 45 contracts, source-verified on Sourcify | [`deployments/8453.json`](deployments/8453.json) |
+| Kinetiq Elysium | 99901 | Live, 45 contracts, source-verified on Gully's Sourcify (verify.gullychain.xyz) | [`deployments/99901.json`](deployments/99901.json) |
 | HyperEVM | 999 | On hold, not deployed | |
 
 Builders start with the [integration guide](docs/integration-guide.md).
