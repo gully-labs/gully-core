@@ -7,7 +7,10 @@ Read the contracts in `packages/launchpad/src` for exact signatures.
 Addresses are not in this guide. Read them from `deployments/8453.json`, `deployments/56.json`, `deployments/4663.json`, `deployments/6714.json`, `deployments/99901.json` and `deployments/485590.json`
 (links: [8453](../deployments/8453.json), [56](../deployments/56.json), [4663](../deployments/4663.json), [6714](../deployments/6714.json), [99901](../deployments/99901.json), [485590](../deployments/485590.json)).
 
-The TypeScript SDK is `@gullylabs/core-sdk`. It is not on npm yet.
+The TypeScript SDK is `@gullylabs/core-sdk` (MIT), with the `gullycore` CLI and the `@gullylabs/create-core-app`
+template beside it. Source: [gully-labs/gully-core-sdk](https://github.com/gully-labs/gully-core-sdk); its address book is
+generated from the `deployments/` files of this repository and a sync check keeps the two equal. **Available after
+publish:** the npm install line goes here once version 0.3.0 is on npm; until then build it from the source repository.
 
 ## 1. What one launch does
 
