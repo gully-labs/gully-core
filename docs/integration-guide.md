@@ -4,8 +4,8 @@ For developers who launch tokens, run a launchpad or run a DEX on Gully Core. It
 (`LaunchpadKitV2`), the lockers, the pad factory and the fees you pay. Gully Core is built on PancakeSwap Infinity's audited core.
 Read the contracts in `packages/launchpad/src` for exact signatures.
 
-Addresses are not in this guide. Read them from `deployments/8453.json`, `deployments/56.json`, `deployments/4663.json`, `deployments/6714.json` and `deployments/485590.json`
-(links: [8453](../deployments/8453.json), [56](../deployments/56.json), [4663](../deployments/4663.json), [6714](../deployments/6714.json), [485590](../deployments/485590.json)).
+Addresses are not in this guide. Read them from `deployments/8453.json`, `deployments/56.json`, `deployments/4663.json`, `deployments/6714.json`, `deployments/99901.json` and `deployments/485590.json`
+(links: [8453](../deployments/8453.json), [56](../deployments/56.json), [4663](../deployments/4663.json), [6714](../deployments/6714.json), [99901](../deployments/99901.json), [485590](../deployments/485590.json)).
 
 The TypeScript SDK is `@gullylabs/core-sdk`. It is not on npm yet.
 
@@ -365,8 +365,14 @@ windows are short: prefer timestamps. Public RPCs serve small `eth_getLogs` span
 `block.number` is the chain's own (about 0.2 s a block): prefer timestamps for every duration. Public RPCs serve
 `eth_getLogs` spans of about 10,000 blocks; page your event reads.
 
+**Kinetiq Elysium (99901).** HYPE is the gas token and quotes native pools. The wrapped native used by Gully Core is
+`0xceeB06009b870430aC2872e3ba875aB6A9AB6699` (WETH9 wrapping HYPE, 1:1). Read the chain through Gully RPC at
+`https://rpc.gullyrpc.xyz/gullychain/evm/99901`. The chain's public endpoint rejects bursts of parallel requests: cap
+the requests you keep in flight, batch your reads and honour `Retry-After`. Explorer: `https://scan.elysp.com`.
+Contracts are source-verified on Gully's Sourcify at `https://verify.gullychain.xyz`.
+
 **Gully Chain Testnet (485590).** An Arbitrum Orbit chain. `block.number` here is the parent chain's block number,
 not a local one. This is another reason to use timestamps only.
 
-Contract addresses: [`deployments/8453.json`](../deployments/8453.json), [`deployments/56.json`](../deployments/56.json), [`deployments/4663.json`](../deployments/4663.json), [`deployments/6714.json`](../deployments/6714.json) and
+Contract addresses: [`deployments/8453.json`](../deployments/8453.json), [`deployments/56.json`](../deployments/56.json), [`deployments/4663.json`](../deployments/4663.json), [`deployments/6714.json`](../deployments/6714.json), [`deployments/99901.json`](../deployments/99901.json) and
 [`deployments/485590.json`](../deployments/485590.json).
