@@ -9,8 +9,32 @@ Addresses are not in this guide. Read them from `deployments/8453.json`, `deploy
 
 The TypeScript SDK is `@gullylabs/core-sdk` (MIT), with the `gullycore` CLI and the `@gullylabs/create-core-app`
 template beside it. Source: [gully-labs/gully-core-sdk](https://github.com/gully-labs/gully-core-sdk); its address book is
-generated from the `deployments/` files of this repository and a sync check keeps the two equal. **Available after
-publish:** the npm install line goes here once version 0.3.0 is on npm; until then build it from the source repository.
+generated from the `deployments/` files of this repository and a sync check keeps the two equal.
+
+```bash
+npm install @gullylabs/core-sdk viem        # @gullylabs/core-sdk 0.3.0, Node 20 or newer
+npm install -g @gullylabs/core-cli          # the gullycore command
+```
+
+A read-only start: the launch kit's limits on Gully Chain Testnet through the keyless Gully RPC endpoint. It sends
+nothing and needs no key.
+
+```ts
+import { createPublicClient, http } from "viem";
+import { requireDeployment, requireLaunchpadV2, readKitV2Limits } from "@gullylabs/core-sdk";
+
+const book = requireDeployment(485590); // Gully Chain Testnet; 8453, 56, 4663, 6714, 99901 for the mainnets
+const client = createPublicClient({
+  transport: http("https://rpc.gullyrpc.xyz/gullychain/evm/485590"), // keyless Gully RPC, rate-limited
+});
+
+const kit = requireLaunchpadV2(book).launchpadKitV2;
+const limits = await readKitV2Limits(client, kit); // reads only, sends nothing
+console.log(kit, limits.caps, limits.tax);
+```
+
+The app template (`npm create @gullylabs/core-app`) scaffolds today; the scaffolded app installs once the 0.3.1
+template release is out.
 
 ## 1. What one launch does
 
