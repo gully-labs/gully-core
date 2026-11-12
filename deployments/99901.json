@@ -17,7 +17,7 @@
     "safeProxyFactory": "0xd9d2Ba03a7754250FDD71333F444636471CACBC4"
   },
   "network": "Kinetiq Elysium",
-  "explorer": "https://scan.elysp.com",
+  "explorer": "https://elysium.kinetiq.xyz/explorer",
   "rpc": "https://rpc.gullyrpc.xyz/gullychain/evm/99901",
   "verifiedOn": "https://verify.gullychain.xyz",
   "pools": null,
